@@ -60,18 +60,18 @@ export const actions: Actions = {
 
 async function action(event: RequestEvent) {
 	if (event.locals.session === null || event.locals.user === null) {
-		return new Response("Not authenticated", {
-			status: 401
+		return fail(401, {
+			message: "Not authenticated"
 		});
 	}
 	if (!event.locals.user.emailVerified) {
-		return new Response("Forbidden", {
-			status: 403
+		return fail(403, {
+			message: "Forbidden"
 		});
 	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
-		return new Response("Forbidden", {
-			status: 403
+		return fail(403, {
+			message: "Forbidden"
 		});
 	}
 
