@@ -7,10 +7,25 @@ import type { RequestEvent } from "./$types";
 export async function GET(event: RequestEvent) {
 	const { session, user } = validatePasswordResetSessionRequest(event);
 	if (session === null) {
-		return redirect(302, "/login");
+		return new Response(null, {
+			status: 302,
+			headers: {
+				Location: "/login"
+			}
+		});
 	}
 	if (!user.registered2FA || session.twoFactorVerified) {
-		return redirect(302, "/reset-password");
+		return new Response(null, {
+			status: 302,
+			headers: {
+				Location: "/reset-password"
+			}
+		});
 	}
-	return redirect(302, getPasswordReset2FARedirect(user));
+	return new Response(null, {
+		status: 302,
+		headers: {
+			Location: getPasswordReset2FARedirect(user)
+		}
+	});
 }
