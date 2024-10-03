@@ -14,6 +14,9 @@ const adapter: SyncAdapter<sqlite3.RunResult> = {
 		for (let i = 0; i < result.length; i++) {
 			for (let j = 0; j < result[i].length; j++) {
 				if (result[i][j] instanceof Buffer) {
+					// Explicitly convert to Uint8Array since SvelteKit's serialization
+					// doesn't support Node Buffer (even though it's just a sub-class
+					// of Uint8Array)
 					result[i][j] = new Uint8Array(result[i][j] as Buffer);
 				}
 			}
