@@ -18,9 +18,6 @@ export async function load(event: RequestEvent) {
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
 		return redirect(302, get2FARedirect(event.locals.user));
 	}
-	if (event.locals.user.registeredTOTP) {
-		return redirect(302, "/");
-	}
 
 	const totpKey = new Uint8Array(20);
 	crypto.getRandomValues(totpKey);
@@ -49,11 +46,6 @@ async function action(event: RequestEvent) {
 		});
 	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
-		return fail(403, {
-			message: "Forbidden"
-		});
-	}
-	if (event.locals.user.registeredTOTP) {
 		return fail(403, {
 			message: "Forbidden"
 		});
