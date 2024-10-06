@@ -7,7 +7,7 @@
 	export let form: ActionData;
 </script>
 
-<h1>Two-factor authentication</h1>
+<h1>Authenticate with authenticator app</h1>
 <form method="post" use:enhance>
 	<label for="form-totp.code">Enter the code from your app</label>
 	<input id="form-totp.code" name="code" autocomplete="one-time-code" required /><br />

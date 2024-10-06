@@ -7,7 +7,7 @@
 	export let form: ActionData;
 </script>
 
-<h1>Set up two-factor authentication</h1>
+<h1>Set up authenticator app</h1>
 <div style="width:200px; height: 200px;">
 	{@html data.qrcode}
 </div>
