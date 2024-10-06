@@ -24,12 +24,7 @@ export async function POST(event: RequestEvent) {
 			status: 401
 		});
 	}
-	if (!user.emailVerified) {
-		return new Response("Forbidden", {
-			status: 403
-		});
-	}
-	if (!user.registeredPasskey) {
+	if (!user.emailVerified || !user.registeredPasskey || session.twoFactorVerified) {
 		return new Response("Forbidden", {
 			status: 403
 		});

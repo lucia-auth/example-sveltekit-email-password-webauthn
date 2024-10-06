@@ -40,14 +40,14 @@ async function action(event: RequestEvent) {
 			message: "Not authenticated"
 		});
 	}
+	if (!user.emailVerified || !user.registeredTOTP || session.twoFactorVerified) {
+		return fail(403, {
+			message: "Forbidden"
+		});
+	}
 	if (!totpBucket.check(session.userId, 1)) {
 		return fail(429, {
 			message: "Too many requests"
-		});
-	}
-	if (!user.registered2FA || session.twoFactorVerified || !session.emailVerified) {
-		return fail(403, {
-			message: "Forbidden"
 		});
 	}
 

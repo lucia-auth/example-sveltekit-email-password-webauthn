@@ -131,10 +131,6 @@ async function resendEmail(event: RequestEvent) {
 		});
 	}
 
-	let verificationRequest = getUserEmailVerificationRequestFromRequest(event);
-	if (verificationRequest === null) {
-		return fail(401);
-	}
 	if (!sendVerificationEmailBucket.consume(event.locals.user.id, 1)) {
 		return fail(429, {
 			resend: {
@@ -142,7 +138,20 @@ async function resendEmail(event: RequestEvent) {
 			}
 		});
 	}
-	verificationRequest = createEmailVerificationRequest(verificationRequest.userId, verificationRequest.email);
+
+	let verificationRequest = getUserEmailVerificationRequestFromRequest(event);
+	if (verificationRequest === null) {
+		if (event.locals.user.emailVerified) {
+			return fail(403, {
+				resend: {
+					message: "Forbidden"
+				}
+			});
+		}
+		verificationRequest = createEmailVerificationRequest(event.locals.user.id, event.locals.user.email);
+	} else {
+		verificationRequest = createEmailVerificationRequest(event.locals.user.id, verificationRequest.email);
+	}
 	sendVerificationEmail(verificationRequest.email, verificationRequest.code);
 	setEmailVerificationRequestCookie(event, verificationRequest);
 	return {

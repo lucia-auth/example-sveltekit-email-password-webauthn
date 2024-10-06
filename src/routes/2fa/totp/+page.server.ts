@@ -33,12 +33,7 @@ async function action(event: RequestEvent) {
 			message: "Not authenticated"
 		});
 	}
-	if (!event.locals.user.emailVerified) {
-		return fail(403, {
-			message: "Forbidden"
-		});
-	}
-	if (!event.locals.user.registered2FA) {
+	if (!event.locals.user.emailVerified || !event.locals.user.registeredTOTP || event.locals.session.twoFactorVerified) {
 		return fail(403, {
 			message: "Forbidden"
 		});

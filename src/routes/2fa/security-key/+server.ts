@@ -23,12 +23,11 @@ export async function POST(event: RequestEvent) {
 			status: 401
 		});
 	}
-	if (!event.locals.user.emailVerified) {
-		return new Response("Forbidden", {
-			status: 403
-		});
-	}
-	if (!event.locals.user.registeredSecurityKey) {
+	if (
+		!event.locals.user.emailVerified ||
+		!event.locals.user.registeredSecurityKey ||
+		event.locals.session.twoFactorVerified
+	) {
 		return new Response("Forbidden", {
 			status: 403
 		});

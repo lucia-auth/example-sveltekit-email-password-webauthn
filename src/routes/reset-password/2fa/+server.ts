@@ -1,4 +1,3 @@
-import { redirect } from "@sveltejs/kit";
 import { getPasswordReset2FARedirect } from "$lib/server/2fa";
 import { validatePasswordResetSessionRequest } from "$lib/server/password-reset";
 
