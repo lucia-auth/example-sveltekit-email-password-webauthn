@@ -68,13 +68,6 @@ async function updatePasswordAction(event: RequestEvent) {
 			}
 		});
 	}
-	if (!event.locals.user.emailVerified) {
-		return fail(403, {
-			password: {
-				message: "Forbidden"
-			}
-		});
-	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
 		return fail(403, {
 			password: {
@@ -125,6 +118,7 @@ async function updatePasswordAction(event: RequestEvent) {
 			}
 		});
 	}
+	passwordUpdateBucket.reset(event.locals.session.id);
 	invalidateUserSessions(event.locals.user.id);
 	await updateUserPassword(event.locals.user.id, newPassword);
 
