@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
 
-	import type { ActionData, PageData } from "./$types";
+	import type { ActionData } from "./$types";
 
-	export let data: PageData;
 	export let form: ActionData;
 </script>
 
@@ -14,12 +13,3 @@
 	<button>Verify</button>
 	<p>{form?.message ?? ""}</p>
 </form>
-{#if data.user.registeredSecurityKey}
-	<a href="/reset-password/2fa/security-key">Use security keys</a>
-{/if}
-{#if data.user.registeredPasskey}
-	<a href="/reset-password/2fa/passkey">Use passkeys</a>
-{/if}
-{#if data.user.registeredTOTP}
-	<a href="/reset-password/2fa/totp">Use authenticator apps</a>
-{/if}

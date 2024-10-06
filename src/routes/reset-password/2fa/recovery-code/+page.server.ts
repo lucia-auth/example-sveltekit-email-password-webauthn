@@ -19,9 +19,7 @@ export async function load(event: RequestEvent) {
 	if (session.twoFactorVerified) {
 		return redirect(302, "/reset-password");
 	}
-	return {
-		user
-	};
+	return {};
 }
 
 export const actions: Actions = {
