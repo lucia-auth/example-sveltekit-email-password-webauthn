@@ -40,7 +40,7 @@ async function action(event: RequestEvent) {
 			message: "Not authenticated"
 		});
 	}
-	if (!user.emailVerified || !user.registeredTOTP || session.twoFactorVerified) {
+	if (!session.emailVerified || !user.registeredTOTP || session.twoFactorVerified) {
 		return fail(403, {
 			message: "Forbidden"
 		});

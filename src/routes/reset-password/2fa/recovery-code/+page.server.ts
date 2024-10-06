@@ -35,7 +35,7 @@ async function action(event: RequestEvent) {
 			message: "Not authenticated"
 		});
 	}
-	if (!user.emailVerified || !user.registered2FA || session.twoFactorVerified) {
+	if (!session.emailVerified || !user.registered2FA || session.twoFactorVerified) {
 		return fail(403, {
 			message: "Forbidden"
 		});
