@@ -8,8 +8,9 @@
 </script>
 
 <h1>Authenticate with authenticator app</h1>
+<p>Enter the code from your app.</p>
 <form method="post" use:enhance>
-	<label for="form-totp.code">Enter the code from your app</label>
+	<label for="form-totp.code">Code</label>
 	<input id="form-totp.code" name="code" autocomplete="one-time-code" required /><br />
 	<button>Verify</button>
 	<p>{form?.message ?? ""}</p>
