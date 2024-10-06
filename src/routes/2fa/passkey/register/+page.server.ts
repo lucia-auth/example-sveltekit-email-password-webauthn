@@ -72,9 +72,9 @@ async function action(event: RequestEvent) {
 	}
 
 	const formData = await event.request.formData();
-	let name = formData.get("name");
-	let encodedAttestationObject = formData.get("attestation_object");
-	let encodedClientDataJSON = formData.get("client_data_json");
+	const name = formData.get("name");
+	const encodedAttestationObject = formData.get("attestation_object");
+	const encodedClientDataJSON = formData.get("client_data_json");
 	if (
 		typeof name !== "string" ||
 		typeof encodedAttestationObject !== "string" ||
