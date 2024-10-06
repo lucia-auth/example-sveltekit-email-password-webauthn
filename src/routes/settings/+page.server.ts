@@ -28,7 +28,7 @@ import type { Actions, RequestEvent } from "./$types";
 import type { SessionFlags } from "$lib/server/session";
 
 export async function load(event: RequestEvent) {
-	if (event.locals.user === null || event.locals.session === null) {
+	if (event.locals.session === null || event.locals.user === null) {
 		return redirect(302, "/login");
 	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
@@ -58,7 +58,7 @@ export const actions: Actions = {
 };
 
 async function updatePasswordAction(event: RequestEvent) {
-	if (event.locals.user === null || event.locals.session === null) {
+	if (event.locals.session === null || event.locals.user === null) {
 		return fail(401, {
 			password: {
 				message: "Not authenticated"
@@ -207,7 +207,7 @@ async function disconnectTOTPAction(event: RequestEvent) {
 }
 
 async function deletePasskeyAction(event: RequestEvent) {
-	if (event.locals.user === null || event.locals.session === null) {
+	if (event.locals.session === null || event.locals.user === null) {
 		return fail(401);
 	}
 	if (!event.locals.user.emailVerified) {
@@ -235,7 +235,7 @@ async function deletePasskeyAction(event: RequestEvent) {
 }
 
 async function deleteSecurityKeyAction(event: RequestEvent) {
-	if (event.locals.user === null || event.locals.session === null) {
+	if (event.locals.session === null || event.locals.user === null) {
 		return fail(401);
 	}
 	if (!event.locals.user.emailVerified) {
