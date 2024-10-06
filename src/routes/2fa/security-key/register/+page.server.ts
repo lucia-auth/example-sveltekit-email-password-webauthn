@@ -102,7 +102,7 @@ async function action(event: RequestEvent) {
 	let attestationStatement: AttestationStatement;
 	let authenticatorData: AuthenticatorData;
 	try {
-		let attestationObject = parseAttestationObject(attestationObjectBytes);
+		const attestationObject = parseAttestationObject(attestationObjectBytes);
 		attestationStatement = attestationObject.attestationStatement;
 		authenticatorData = attestationObject.authenticatorData;
 	} catch {
