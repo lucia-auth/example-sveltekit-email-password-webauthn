@@ -13,7 +13,6 @@ import { verifyWebAuthnChallenge, getPasskeyCredential } from "$lib/server/webau
 import { createSession, generateSessionToken, setSessionTokenCookie } from "$lib/server/session";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { decodePKCS1RSAPublicKey, sha256ObjectIdentifier, verifyRSASSAPKCS1v15Signature } from "@oslojs/crypto/rsa";
-import { redirect } from "@sveltejs/kit";
 
 import type { RequestEvent } from "./$types";
 import type { ClientData, AuthenticatorData } from "@oslojs/webauthn";
@@ -137,5 +136,7 @@ export async function POST(context: RequestEvent): Promise<Response> {
 	const sessionToken = generateSessionToken();
 	const session = createSession(sessionToken, credential.userId, sessionFlags);
 	setSessionTokenCookie(context, sessionToken, session.expiresAt);
-	return redirect(302, "/");
+	return new Response(null, {
+		status: 204
+	});
 }
