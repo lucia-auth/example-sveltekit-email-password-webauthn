@@ -130,15 +130,6 @@ async function resendEmail(event: RequestEvent) {
 			}
 		});
 	}
-
-	if (!sendVerificationEmailBucket.consume(event.locals.user.id, 1)) {
-		return fail(429, {
-			resend: {
-				message: "Too many requests"
-			}
-		});
-	}
-
 	let verificationRequest = getUserEmailVerificationRequestFromRequest(event);
 	if (verificationRequest === null) {
 		if (event.locals.user.emailVerified) {
@@ -148,8 +139,22 @@ async function resendEmail(event: RequestEvent) {
 				}
 			});
 		}
+		if (!sendVerificationEmailBucket.consume(event.locals.user.id, 1)) {
+			return fail(429, {
+				resend: {
+					message: "Too many requests"
+				}
+			});
+		}
 		verificationRequest = createEmailVerificationRequest(event.locals.user.id, event.locals.user.email);
 	} else {
+		if (!sendVerificationEmailBucket.consume(event.locals.user.id, 1)) {
+			return fail(429, {
+				resend: {
+					message: "Too many requests"
+				}
+			});
+		}
 		verificationRequest = createEmailVerificationRequest(event.locals.user.id, verificationRequest.email);
 	}
 	sendVerificationEmail(verificationRequest.email, verificationRequest.code);
