@@ -85,7 +85,6 @@ export function getUserEmailVerificationRequestFromRequest(event: RequestEvent):
 	const request = getUserEmailVerificationRequest(event.locals.user.id, id);
 	if (request === null) {
 		deleteEmailVerificationRequestCookie(event);
-		return null;
 	}
 	return request;
 }
