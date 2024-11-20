@@ -87,7 +87,7 @@
 	{#if data.recoveryCode !== null}
 		<section>
 			<h1>Recovery code</h1>
-			<p>Your recovery code is: {data.recoveryCode}}</p>
+			<p>Your recovery code is: {data.recoveryCode}</p>
 			<form method="post" use:enhance action="?/regenerate_recovery_code">
 				<button>Generate new code</button>
 			</form>
